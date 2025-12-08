@@ -1,11 +1,25 @@
 import styles from 'styled-components'
+import React, {useContext} from 'react'
+import { ExpenseContext } from '../context/ExpenseContext'
 
-const ExpenseItem = ({title, amount, date}) => {
+const ExpenseItem = () => {
+
+    const {expenses} = useContext(ExpenseContext);
+
     return (
         <Container>
-            <Item>Groceries — $50 — 2024-01-10</Item>
-            <Item>Electricity Bill — $120 — 2024-01-05</Item>
-            <Item>Movie Night — $30 — 2024-01-03</Item>
+            <TitleThree>Expenses List</TitleThree>
+            {
+                expenses.length === 0 ? (
+                    <p>No Expenses Yet</p>
+                ) : (
+                    expenses.map(exp => (
+                        <Item key={exp.id}>
+                            {exp.title} - ${exp.amount} - {exp.date}
+                        </Item>
+                    ))
+                )
+            }
         </Container>
     )
 }
@@ -29,6 +43,16 @@ const Item = styles.div`
     padding: 1rem 1rem;
     border-bottom: 0.5px solid #ccc;
     font-size: 1.2rem;
+`
+
+const TitleThree = styles.h3`
+    text-align: left;
+    font-size: 1.3rem;
+    font-weight: bold;
+    width: 50vw;
+    margin: 0;
+    padding: 10px 0;
+    color: #333;
 `
 
 export default ExpenseItem;

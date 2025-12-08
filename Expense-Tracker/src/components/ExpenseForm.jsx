@@ -1,19 +1,43 @@
+import { useState, useContext } from 'react';
+import { ExpenseContext } from '../context/ExpenseContext'
 import styles from 'styled-components';
 
 const ExpenseForm = () => {
+
+    const { addExpenses, total } = useContext(ExpenseContext);
+
+    const [title, setTitle] = useState('')
+    const [amount, setAmount] = useState('')
+    const [date, setDate] = useState('')
+
+    const handleAddExpense = (e) => {
+        e.preventDefault();
+
+        if(!title || !amount || !date) {
+            alert("Invalid");
+            return;
+        }
+
+        addExpenses(title, amount, date)
+
+        setTitle('')
+        setAmount('')
+        setDate('')
+    }
+
     return (
         <Container>
             <ContainerOne>
                 <Title>Expense Tracker</Title>
-                <TitleTwo>Total: $0</TitleTwo>
+                <TitleTwo>Total: ${total}</TitleTwo>
             </ContainerOne>
-            <Form>
+            <Form onSubmit={handleAddExpense}>
                 <TitleThree>Add New Expense</TitleThree>
                 <Row>
-                    <Input type="text" placeholder="Title" />
-                    <Input type="number" placeholder="Amount" />
-                    <Input type="date" />
-                    <Button>Add Expense</Button>
+                    <Input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <Input type="number" placeholder="Amount" value={amount} onChange={(e) => setAmount(e.target.value)} />
+                    <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+                    <Button type='submit'>Add Expense</Button>
                 </Row>
             </Form>
         </Container>

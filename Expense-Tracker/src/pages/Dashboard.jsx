@@ -1,15 +1,16 @@
 import ExpenseForm from "../components/ExpenseForm";
 import Filters from "../utils/Filters";
 import ExpenseItem from "../components/ExpenseItem";
-import ExpenseList from "../components/ExpenseList";
+import { ExpenseProvider } from "../context/ExpenseContext";
 
 const Dashboard = () => {
     return (
         <div>
-            <ExpenseForm />
-            <Filters />
-            <ExpenseItem />
-            <ExpenseList />
+            <ExpenseProvider>
+                <ExpenseForm />
+                <Filters />
+                <ExpenseItem />
+            </ExpenseProvider>
         </div>
     )
 }
